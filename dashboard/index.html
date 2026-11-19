@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Token Launch Radar</title>
+<link rel="stylesheet" href="app.css">
+</head>
+<body>
+<header class="top">
+  <div class="brand">
+    <h1>TOKEN LAUNCH RADAR</h1>
+    <p class="tag">Pre-token protocols, ranked by what a token would be worth if the record stayed as it is.</p>
+  </div>
+  <div class="meta" id="meta">Loading snapshot&hellip;</div>
+</header>
+
+<section class="model" id="model">
+  <h2>How the value is scored</h2>
+  <p>Every protocol below records no token, so there is no market price to read. The radar scores each one from the snapshot's own figures only:</p>
+  <p class="formula">implied value = TVL &times; 0.30 &times; growth &times; age &times; launch likelihood</p>
+  <ul>
+    <li><b>TVL &times; 0.30</b> — a token's implied value is taken as roughly a third of the value the protocol already secures.</li>
+    <li><b>Growth</b> — 1 plus the 7-day TVL change, clamped between 0.5 and 2.5. Fast-growing TVL is worth more than shrinking TVL.</li>
+    <li><b>Age</b> — 1 plus 3% per year tracked, capped at 4 years. A record that has survived a while counts for more.</li>
+    <li><b>Launch likelihood</b> — 0.05 for a centralised exchange, a bridge, or a wrapped/staked product of a token that already trades; 0.3 for a versioned build (V2, 2.0); 1 for everything else. Those are not launches waiting to happen.</li>
+  </ul>
+  <p class="note">Implied value is this radar's own claim, never a prediction that a token will be issued, or when. Farm steps are generic plans: check the protocol's own docs before moving money.</p>
+</section>
+
+<section class="stats" id="stats"></section>
+
+<section class="controls">
+  <input id="q" type="search" placeholder="Search name or slug&hellip;" aria-label="Search protocols">
+  <select id="chain" aria-label="Filter by chain"><option value="">All chains</option></select>
+  <select id="cat" aria-label="Filter by category"><option value="">All categories</option></select>
+  <select id="sort" aria-label="Sort by">
+    <option value="value">Sort: implied value</option>
+    <option value="tvl">Sort: TVL</option>
+    <option value="change">Sort: 7-day change</option>
+    <option value="newest">Sort: newest listed</option>
+    <option value="oldest">Sort: oldest listed</option>
+  </select>
+  <label class="wl"><input id="wl" type="checkbox"> Watchlist only</label>
+</section>
+
+<section class="detail" id="detail" hidden></section>
+
+<main>
+  <table id="board">
+    <thead>
+      <tr>
+        <th data-sort="rank">#</th>
+        <th data-sort="name">Protocol</th>
+        <th data-sort="category">Category</th>
+        <th data-sort="chains">Chains</th>
+        <th data-sort="tvl" class="num">TVL</th>
+        <th data-sort="change" class="num">7d</th>
+        <th data-sort="value" class="num">Implied value</th>
+      </tr>
+    </thead>
+    <tbody id="rows"></tbody>
+  </table>
+  <p class="count" id="count"></p>
+</main>
+
+<footer>
+  <p>Snapshot 2026-11-14, DefiLlama protocols at or above $5M TVL. 200 rows: the 40-protocol watchlist (pre-token, $50M+ TVL) plus the 160 pre-token protocols below the floor with the most TVL. Nothing here is financial advice.</p>
+</footer>
+
+<script src="../data.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
